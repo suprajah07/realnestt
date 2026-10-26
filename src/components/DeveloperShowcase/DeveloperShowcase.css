@@ -1,0 +1,460 @@
+/* ============================================================
+   DEVELOPER SHOWCASE — AUTHENTIC 3D LOGO CAROUSEL
+   Linear-style horizontal perspective arc with smooth motion & depth
+   Palette: Dark forest green, champagne gold, pure white & ivory
+   ============================================================ */
+
+.rn-3d-showcase {
+  background: var(--dark-green-bg);
+  position: relative;
+  overflow: hidden;
+  padding: clamp(4.5rem, 8vw, 6.5rem) 0 4rem;
+  color: var(--warm-ivory);
+}
+
+/* Subtle ambient radial glow behind the 3D stage */
+.rn-3d-showcase__ambient-glow {
+  position: absolute;
+  top: 15%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 900px;
+  height: 450px;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(197, 164, 109, 0.16) 0%,
+    rgba(16, 45, 36, 0.35) 45%,
+    rgba(10, 37, 29, 0) 75%
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+.rn-3d-showcase__container {
+  position: relative;
+  z-index: 5;
+}
+
+.rn-3d-showcase__gold {
+  color: var(--champagne-gold);
+}
+
+.rn-3d-showcase__header {
+  max-width: 760px;
+  margin: 0 auto 2.5rem;
+}
+
+.rn-3d-showcase__eyebrow-wrap {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  margin-bottom: 0.65rem;
+}
+
+.rn-3d-showcase__gold-spark {
+  color: var(--champagne-gold);
+}
+
+.rn-3d-showcase__eyebrow {
+  color: var(--champagne-gold);
+  letter-spacing: 0.16em;
+  font-weight: 700;
+  font-size: 0.75rem;
+}
+
+.rn-3d-showcase__title {
+  font-family: var(--font-heading);
+  font-size: clamp(2rem, 4.2vw, 3rem);
+  font-weight: 700;
+  color: var(--pure-white);
+  line-height: 1.2;
+  margin-bottom: 0.85rem;
+}
+
+.rn-3d-showcase__subtitle {
+  font-size: 1.05rem;
+  color: rgba(247, 245, 239, 0.8);
+  line-height: 1.6;
+}
+
+/* ---------- 3D Stage Wrapper ---------- */
+.rn-3d-showcase__stage-wrap {
+  position: relative;
+  width: 100%;
+  max-width: 1140px;
+  height: 220px;
+  margin: 0 auto 1.5rem auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  perspective: 1100px;
+  outline: none;
+}
+
+/* Arrow Navigation */
+.rn-3d-nav-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(16, 45, 36, 0.85);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(197, 164, 109, 0.35);
+  color: var(--warm-ivory);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 40;
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+}
+
+.rn-3d-nav-arrow:hover {
+  background: var(--champagne-gold);
+  color: var(--dark-green-bg);
+  border-color: var(--champagne-gold);
+  transform: translateY(-50%) scale(1.08);
+}
+
+.rn-3d-nav-arrow--prev {
+  left: 0.5rem;
+}
+
+.rn-3d-nav-arrow--next {
+  right: 0.5rem;
+}
+
+/* 3D Arc Track */
+.rn-3d-showcase__arc-stage {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform-style: preserve-3d;
+}
+
+/* ---------- Floating Logo Pedestal Node ---------- */
+.rn-3d-logo-node {
+  position: absolute;
+  cursor: pointer;
+  transform-style: preserve-3d;
+  will-change: transform, opacity;
+  transition: transform 0.65s cubic-bezier(0.16, 1, 0.3, 1),
+              opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1),
+              filter 0.5s ease;
+  outline: none;
+  user-select: none;
+}
+
+.rn-3d-logo-pedestal {
+  position: relative;
+  width: 240px;
+  height: 105px;
+  background: rgba(255, 255, 255, 0.96);
+  border: 1.5px solid rgba(197, 164, 109, 0.35);
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 1.25rem;
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.32),
+              0 0 0 1px rgba(255, 255, 255, 0.4) inset;
+  transition: all 0.3s ease;
+}
+
+.rn-3d-logo-node:hover .rn-3d-logo-pedestal {
+  border-color: var(--champagne-gold);
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.4),
+              0 0 20px rgba(197, 164, 109, 0.4);
+}
+
+.rn-3d-logo-status-dot {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--champagne-gold);
+  box-shadow: 0 0 10px var(--champagne-gold);
+}
+
+/* ---------- 3D Placement States Along Perspective Arc ---------- */
+.rn-3d-logo--center {
+  transform: translate3d(0, 0, 130px) scale(1.15) rotateY(0deg);
+  opacity: 1;
+  z-index: 30;
+  pointer-events: auto;
+}
+
+.rn-3d-logo--center .rn-3d-logo-pedestal {
+  border-color: var(--champagne-gold);
+  background: #FFFFFF;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45),
+              0 0 28px rgba(197, 164, 109, 0.45),
+              0 0 0 1px rgba(197, 164, 109, 0.5) inset;
+}
+
+.rn-3d-logo--right-1 {
+  transform: translate3d(min(270px, 38vw), 0, 30px) scale(0.9) rotateY(-18deg);
+  opacity: 0.75;
+  z-index: 20;
+}
+
+.rn-3d-logo--left-1 {
+  transform: translate3d(max(-270px, -38vw), 0, 30px) scale(0.9) rotateY(18deg);
+  opacity: 0.75;
+  z-index: 20;
+}
+
+.rn-3d-logo--right-2 {
+  transform: translate3d(min(490px, 70vw), 0, -80px) scale(0.7) rotateY(-34deg);
+  opacity: 0.42;
+  z-index: 10;
+}
+
+.rn-3d-logo--left-2 {
+  transform: translate3d(max(-490px, -70vw), 0, -80px) scale(0.7) rotateY(34deg);
+  opacity: 0.42;
+  z-index: 10;
+}
+
+.rn-3d-logo--right-3 {
+  transform: translate3d(min(680px, 92vw), 0, -180px) scale(0.52) rotateY(-46deg);
+  opacity: 0.16;
+  z-index: 5;
+}
+
+.rn-3d-logo--left-3 {
+  transform: translate3d(max(-680px, -92vw), 0, -180px) scale(0.52) rotateY(46deg);
+  opacity: 0.16;
+  z-index: 5;
+}
+
+.rn-3d-logo--far {
+  transform: translate3d(0, 0, -260px) scale(0.4);
+  opacity: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* ---------- Active Developer Readout (Below 3D Stage) ---------- */
+.rn-3d-showcase__readout {
+  max-width: 680px;
+  margin: 0 auto;
+  text-align: center;
+  position: relative;
+  z-index: 25;
+}
+
+.rn-3d-readout-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.15rem;
+}
+
+.rn-3d-verified-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--champagne-gold);
+  background: rgba(197, 164, 109, 0.12);
+  border: 1px solid rgba(197, 164, 109, 0.3);
+  border-radius: var(--radius-full);
+  padding: 0.3rem 0.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.rn-3d-readout-title {
+  font-family: var(--font-heading);
+  font-size: clamp(1.6rem, 2.8vw, 2.15rem);
+  font-weight: 700;
+  color: var(--pure-white);
+  line-height: 1.2;
+  margin-bottom: 0.25rem;
+}
+
+.rn-3d-readout-tagline {
+  font-size: 0.9375rem;
+  color: rgba(247, 245, 239, 0.82);
+  max-width: 540px;
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* Verified Meta Strip */
+.rn-3d-readout-meta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+  flex-wrap: wrap;
+}
+
+.rn-3d-meta-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--warm-ivory);
+  background: rgba(16, 45, 36, 0.65);
+  border: 1px solid rgba(197, 164, 109, 0.25);
+  border-radius: var(--radius-full);
+  padding: 0.35rem 0.85rem;
+}
+
+.rn-3d-meta-icon {
+  color: var(--champagne-gold);
+}
+
+/* CTA Button */
+.rn-3d-readout-action {
+  margin-top: 0.5rem;
+}
+
+.rn-3d-cta-btn {
+  background: var(--champagne-gold) !important;
+  color: var(--dark-green-bg) !important;
+  border-color: var(--champagne-gold) !important;
+  font-weight: 700;
+  box-shadow: 0 6px 20px rgba(197, 164, 109, 0.3);
+  padding: 0.75rem 1.75rem;
+}
+
+.rn-3d-cta-btn:hover {
+  background: var(--pure-white) !important;
+  color: var(--midnight-navy) !important;
+  border-color: var(--pure-white) !important;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(255, 255, 255, 0.35);
+}
+
+/* Indicator Dots */
+.rn-3d-showcase__dots {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 2rem;
+}
+
+.rn-3d-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition: all 0.25s ease;
+}
+
+.rn-3d-dot--active {
+  width: 26px;
+  border-radius: 999px;
+  background: var(--champagne-gold);
+  box-shadow: 0 0 10px rgba(197, 164, 109, 0.6);
+}
+
+/* ---------- Responsive Adjustments ---------- */
+@media (max-width: 900px) {
+  .rn-3d-showcase__stage-wrap {
+    height: 190px;
+  }
+
+  .rn-3d-logo-pedestal {
+    width: 200px;
+    height: 90px;
+    padding: 0.6rem 1rem;
+  }
+
+  .rn-3d-logo--right-3,
+  .rn-3d-logo--left-3 {
+    display: none;
+  }
+
+  .rn-3d-logo--right-1 {
+    transform: translate3d(min(190px, 32vw), 0, 20px) scale(0.85);
+  }
+
+  .rn-3d-logo--left-1 {
+    transform: translate3d(max(-190px, -32vw), 0, 20px) scale(0.85);
+  }
+
+  .rn-3d-logo--right-2 {
+    transform: translate3d(min(340px, 62vw), 0, -60px) scale(0.65);
+  }
+
+  .rn-3d-logo--left-2 {
+    transform: translate3d(max(-340px, -62vw), 0, -60px) scale(0.65);
+  }
+}
+
+@media (max-width: 640px) {
+  .rn-3d-showcase__stage-wrap {
+    height: 160px;
+  }
+
+  .rn-3d-logo-pedestal {
+    width: 175px;
+    height: 80px;
+    padding: 0.5rem 0.85rem;
+    border-radius: 14px;
+  }
+
+  .rn-3d-logo--right-2,
+  .rn-3d-logo--left-2 {
+    display: none;
+  }
+
+  .rn-3d-logo--right-1 {
+    transform: translate3d(140px, 0, 10px) scale(0.78);
+    opacity: 0.55;
+  }
+
+  .rn-3d-logo--left-1 {
+    transform: translate3d(-140px, 0, 10px) scale(0.78);
+    opacity: 0.55;
+  }
+
+  .rn-3d-logo--center {
+    transform: translate3d(0, 0, 60px) scale(1.05);
+  }
+
+  .rn-3d-nav-arrow {
+    width: 36px;
+    height: 36px;
+  }
+
+  .rn-3d-nav-arrow--prev {
+    left: -0.25rem;
+  }
+
+  .rn-3d-nav-arrow--next {
+    right: -0.25rem;
+  }
+
+  .rn-3d-cta-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  .rn-3d-logo-node {
+    transition: none !important;
+  }
+}
